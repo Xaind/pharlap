@@ -6,13 +6,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.parker.domain.Horse;
+import com.parker.domain.Track;
 import com.parker.repository.HorseRepository;
+import com.parker.service.DataMiningService;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
 	@Autowired
 	private HorseRepository horseRepository;
+	
+	@Autowired
+	private DataMiningService dataMiningService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -42,5 +47,9 @@ public class Application implements CommandLineRunner {
 		System.out.println("Horse found with findByName('Bob'):");
 		System.out.println("--------------------------------");
 		System.out.println(horseRepository.findByName("Bob"));
+		
+		
+		dataMiningService.getForm(Track.DOOMBEN, "220417", 1);
+		dataMiningService.getHorse("emerald-city");
 	}
 }
