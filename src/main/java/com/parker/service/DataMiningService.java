@@ -1,4 +1,4 @@
-package com.sentech.service;
+package com.parker.service;
 
 import org.springframework.stereotype.Service;
 

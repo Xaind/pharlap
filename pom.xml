@@ -7,10 +7,10 @@
 		<version>1.2.3.RELEASE</version>
 	</parent>
 	
-	<groupId>com.sentech</groupId>
+	<groupId>com.parker</groupId>
 	<artifactId>pharlap</artifactId>
 	<name>Pharlap</name>
-	<description>Horse race prediction software</description>
+	<description>Horse racing prediction software</description>
 	<version>1.0.0</version>
 	
 	<properties>

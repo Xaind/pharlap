@@ -1,4 +1,4 @@
-package com.sentech.domain;
+package com.parker.domain;
 
 /**
  * Specific details of a horse for a specific race.

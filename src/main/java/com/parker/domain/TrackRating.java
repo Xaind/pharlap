@@ -1,4 +1,4 @@
-package com.sentech.domain;
+package com.parker.domain;
 
 /**
  * Tracking ratings as defined by the Australian Racing Board. 

@@ -1,8 +1,8 @@
-package com.sentech.repository;
+package com.parker.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.sentech.domain.Horse;
+import com.parker.domain.Horse;
 
 /**
  * Repository for a horse.

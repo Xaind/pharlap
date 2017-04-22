@@ -1,12 +1,12 @@
-package com.sentech;
+package com.parker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.sentech.domain.Horse;
-import com.sentech.repository.HorseRepository;
+import com.parker.domain.Horse;
+import com.parker.repository.HorseRepository;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {

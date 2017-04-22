@@ -3,5 +3,6 @@
 /.settings
 .classpath
 .project
+.factoryPath
 /data
 /src/main/resources/public/report/runtime/

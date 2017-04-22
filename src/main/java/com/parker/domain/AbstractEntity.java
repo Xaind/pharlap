@@ -1,4 +1,4 @@
-package com.sentech.domain;
+package com.parker.domain;
 
 import java.io.Serializable;
 
