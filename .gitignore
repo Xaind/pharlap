@@ -1,0 +1,7 @@
+/target
+/nbactions.xml
+/.settings
+.classpath
+.project
+/data
+/src/main/resources/public/report/runtime/
