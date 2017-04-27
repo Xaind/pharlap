@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "url.base",
+    "type": "java.lang.String",
+    "description": "A description for 'url.base'"
+  },
+  {
+    "name": "url.form",
+    "type": "java.lang.String",
+    "description": "A description for 'url.form'"
+  },
+  {
+    "name": "url.horse",
+    "type": "java.lang.String",
+    "description": "A description for 'url.horse'"
+  },
+  {
+    "name": "url.race",
+    "type": "java.lang.String",
+    "description": "A description for 'url.race'"
+  },
+  {
+    "name": "url.jockey",
+    "type": "java.lang.String",
+    "description": "A description for 'url.jockey'"
+  }
+]}

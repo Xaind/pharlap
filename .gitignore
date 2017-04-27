@@ -1,8 +1,9 @@
 /target
-/nbactions.xml
-/.settings
+.settings
 .classpath
 .project
 .factoryPath
-/data
-/src/main/resources/public/report/runtime/
+.apt_generated
+.springBeans
+.tern-project
+.mvn
