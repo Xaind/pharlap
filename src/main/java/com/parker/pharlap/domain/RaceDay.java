@@ -6,12 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class RaceDay extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date date;
+	
 	private Map<Track, List<Race>> tracks;
+	
+	public RaceDay() {
+	}
 	
 	public RaceDay(Date date) {
 		this.date = date;

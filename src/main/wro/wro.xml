@@ -8,4 +8,9 @@
 		<js>webjar:angularjs/@angularjs.version@/angular-route.min.js</js>
 		<js>webjar:angularjs/@angularjs.version@/angular-cookies.min.js</js>
 	</group>
+	
+	<group name="bootstrap-datepicker">
+		<css>webjar:bootstrap-datepicker/@bootstrap.datepicker.version@/css/bootstrap-datepicker.min.css</css>
+		<js>webjar:bootstrap-datepicker/@bootstrap.datepicker.version@/js/bootstrap-datepicker.min.js</js>
+	</group>
 </groups>
