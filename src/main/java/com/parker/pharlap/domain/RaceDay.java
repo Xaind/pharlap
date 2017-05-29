@@ -42,6 +42,10 @@ public class RaceDay extends AbstractEntity {
 	public void setTracks(Map<Track, List<Race>> tracks) {
 		this.tracks = tracks;
 	}
+	
+	public void addTrack(Track track) {
+		getTracks().put(track, new ArrayList<>());
+	}
 
 	public List<Race> getRaces(Track track) {
 		List<Race> races = getTracks().get(track);

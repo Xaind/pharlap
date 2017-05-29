@@ -5,9 +5,14 @@ package com.parker.pharlap.domain;
  */
 public enum Track {
 	
+	ASCOT("ascot"),
+	WARWICK_FARM("w_fm"),
+	DARWIN("darwin"),
+	GOLD_COAST("gold_coast"),
 	DOOMBEN("doom"),
-	RANDWICK("rand"),
-	FLEMINGTON("flem");
+	EAGLE_FARM("e_fm"),
+	FLEMINGTON("flem"),
+	RANDWICK("rand");
 	
 	private String code;
 	
@@ -17,5 +22,14 @@ public enum Track {
 	
 	public String getCode() {
 		return code;
+	}
+	
+	public static Track findByName(String trackName) {
+	    for (Track track : values()) {
+	        if (track.name().equals(trackName)) {
+	            return track;
+	        }
+	    }
+	    return null;
 	}
 }

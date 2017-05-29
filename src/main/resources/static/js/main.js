@@ -3,11 +3,21 @@ angular.module('pharlap', [])
 	var self = this;
 
 	// Initialize the date to the next Saturday
-	$scope.raceDate = $filter('date')(new Date(), 'dd/MM/yyyy');
+	$scope.raceDate = $filter("date")(new Date(), "dd/MM/yyyy");
 
-	self.retrieveData = function() {
-		var raceDay = {date: $scope.raceDate};
-		$http.post("execute/", angular.toJson(raceDay));
+	self.xretrieveData = function() {
+		$http.post("getUpcomingRaceDays/").then(function(response) {			
+			$scope.raceDays = response.data;
+		}, function(error) {
+			alert(error);
+		});
 	}
-
+	
+	self.retrieveData = function() {
+		$http.post("raceDay/", 'date=01/01/2017', {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function(response) {				
+			$scope.raceDays = response.data;
+		}, function(error) {
+			alert(error);
+		});
+	}
 });

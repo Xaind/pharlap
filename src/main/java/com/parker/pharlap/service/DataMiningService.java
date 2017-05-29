@@ -1,7 +1,14 @@
 package com.parker.pharlap.service;
 
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,42 +16,115 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.parker.pharlap.domain.RaceDay;
 import com.parker.pharlap.domain.Track;
+import com.parker.pharlap.utils.DateUtils;
 
 /**
  * Service for locating horse and race data.
  */
 @Service
 public class DataMiningService {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(DataMiningService.class);
 
-	@Value("${url.form}")
-	private String formUrl;
-	
-	@Value("${url.horse}")
-	private String horseUrl;
-	
-	@Value("${url.race}")
-	private String raceUrl;
-	
-	@Value("${url.jockey}")
-	private String jockeyUrl;
-	
-	public void getForm(Track track, String date, int raceNo) {
-		String url = MessageFormat.format(formUrl, track.getCode(), date, raceNo);
-		LOGGER.info(getPage(url));
-	}
-	
-	public void getHorse(String name) {
-		String url = MessageFormat.format(horseUrl, name);
-		LOGGER.info(getPage(url));
-	}
-	
-	protected String getPage(String url) {
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-		return responseEntity.getBody();
-	}
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataMiningService.class);
+
+    @Value("${url.form}")
+    private String formUrl;
+
+    @Value("${url.race.form}")
+    private String raceFormUrl;
+
+    @Value("${url.horse}")
+    private String horseUrl;
+
+    @Value("${url.race.result}")
+    private String raceUrl;
+
+    @Value("${url.jockey}")
+    private String jockeyUrl;
+
+    public List<RaceDay> getUpcomingRaceDays() {
+        List<RaceDay> raceDays = new ArrayList<>();
+
+        Document document = getDocument(formUrl);
+        Element container = document.select("#formListContainer").first();
+
+        for (Element dateElement : container.getElementsByClass("form_date_header")) {
+            Date raceDate = parseDate(dateElement.text());
+            RaceDay raceDay = new RaceDay(raceDate);
+
+            Element meetingElement = dateElement.parent().nextElementSibling().child(0);
+            while (meetingElement.attr("class").contains("form_meeting_info")) {
+                String trackName = meetingElement.text().split(" - ")[0];
+
+                Track track = Track.findByName(trackName.replaceAll(" ", "_").toUpperCase());
+                if (track != null) {
+                    raceDay.addTrack(track);
+                }
+                
+                meetingElement = meetingElement.parent().nextElementSibling();
+                if (meetingElement == null) {
+                    break;
+                }
+
+                meetingElement = meetingElement.child(0);
+            }
+
+            if (!raceDay.getTracks().isEmpty()) {
+                raceDays.add(raceDay);
+                LOGGER.info(raceDay.getDate().toString());
+
+                for (Track track : raceDay.getTracks().keySet()) {
+                    LOGGER.info(track.name());
+                }
+                LOGGER.info("-----------------------------------------------------------------------------");
+            }
+        }
+
+        // Populate track data
+        for (RaceDay raceDay : raceDays) {
+            int raceNo = 1;
+            for (Track track : raceDay.getTracks().keySet())
+
+                updateRaceForm(track, raceDay.getDate(), raceNo++);
+
+        }
+
+        return raceDays;
+    }
+
+    protected Date parseDate(String dateString) {
+        try {
+            return DateUtils.parseDate(dateString, "EEEEE - dd MMM yyyy");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateRaceForm(Track track, Date date, int raceNo) {
+        String dateString = DateUtils.format(date);
+        String url = MessageFormat.format(raceFormUrl, track.getCode(), dateString, raceNo);
+        Document document = getDocument(url);
+        Element container = document.select("div#meetingContent").first();
+
+        for (Element dateElement : container.getElementsByClass("form_date_header")) {
+        
+        
+            
+        }
+        
+        LOGGER.info(getDocument(url).html());
+    }
+
+    public void getHorse(String name) {
+        String url = MessageFormat.format(horseUrl, name);
+        LOGGER.info(getDocument(url).html());
+    }
+
+    protected Document getDocument(String url) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        return Jsoup.parse(responseEntity.getBody());
+    }
 
 }

@@ -6,7 +6,9 @@ security:
 # External URLs
 url:
   base: https://www.racenet.com.au
-  form: ${url.base}/form/formguide.aspx?trackcode={0}&shortdate={1}&raceno={2}
+  form: ${url.base}/racing-form-guide/
   horse: ${url.base}/horse/{0}
-  race: ${url.base}/horse-racing-results/{0}/{1}
   jockey: ${url.base}/jockey/{0}
+  race: 
+    form: ${url.base}/form/formguide.aspx?trackcode={0}&shortdate={1}&raceno={2}
+    result: ${url.base}/horse-racing-results/{0}/{1}
