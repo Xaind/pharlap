@@ -17,7 +17,7 @@ angular.module('pharlap', [])
 		$http.post("raceDay/", 'date=01/01/2017', {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(function(response) {				
 			$scope.raceDays = response.data;
 		}, function(error) {
-			alert(error);
+			//alert(error);
 		});
 	}
 });

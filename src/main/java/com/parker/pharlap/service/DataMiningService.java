@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.parker.pharlap.domain.Race;
 import com.parker.pharlap.domain.RaceDay;
 import com.parker.pharlap.domain.Track;
 import com.parker.pharlap.utils.DateUtils;
@@ -106,8 +107,16 @@ public class DataMiningService {
         String url = MessageFormat.format(raceFormUrl, track.getCode(), dateString, raceNo);
         Document document = getDocument(url);
         Element container = document.select("div#meetingContent").first();
-
-        for (Element dateElement : container.getElementsByClass("form_date_header")) {
+        Element raceHeader = container.select("td > span.RaceNo").first();
+        
+        String raceText = raceHeader.parent().nextElementSibling().child(0).text();
+        String[] parts = raceText.split(" ");
+        int distance = Integer.valueOf(parts[parts.length - 1].replaceAll("m", ""));
+        
+        Race race = new Race();
+        race.setDistance(distance);
+        
+        for (Element raceElement : container.select("table.HorseHeader")) {
         
         
             
