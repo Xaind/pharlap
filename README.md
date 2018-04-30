@@ -1,4 +1,4 @@
-# Pharlap - Horse Racing Prediction Application
+# Centaur - Horse Racing Prediction Application
 
 **Download source**
 
